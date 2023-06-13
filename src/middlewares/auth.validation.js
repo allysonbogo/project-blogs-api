@@ -1,5 +1,4 @@
 const { decodeToken } = require('../utils/JWT');
-const { User } = require('../models');
 
 const validateJwt = async (req, res, next) => {
   const { authorization: token } = req.headers;

@@ -25,10 +25,22 @@ const findAll = async () => {
     const { password, ...filteredUser } = user.toJSON();
     return filteredUser;
   });
-  return filteredUsers;
+  
+  return { type: null, message: filteredUsers };
+};
+
+const findById = async (id) => {
+  const user = await User.findByPk(id);
+  if (!user) {
+    return { type: 404, message: 'User does not exist' };
+  }
+  const { password, ...filteredUser } = user.toJSON();
+
+  return { type: null, message: filteredUser };
 };
 
 module.exports = {
   create,
   findAll,
+  findById,
 };

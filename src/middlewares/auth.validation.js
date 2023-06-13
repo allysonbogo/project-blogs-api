@@ -1,6 +1,6 @@
 const { decodeToken } = require('../utils/JWT');
 
-const validateJwt = async (req, res, next) => {
+const validateJWT = async (req, res, next) => {
   const { authorization: token } = req.headers;
 
   if (!token) {
@@ -18,5 +18,5 @@ const validateJwt = async (req, res, next) => {
 };
 
 module.exports = {
-  validateJwt,
+  validateJWT,
 };

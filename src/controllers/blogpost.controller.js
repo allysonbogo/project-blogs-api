@@ -45,10 +45,20 @@ const remove = async (req, res) => {
   return res.status(204).end();
 };
 
+const search = async (req, res) => {
+  const { q } = req.query;
+  const { type, message } = await blogPostService.search(q);
+
+  if (type) return res.status(type).json({ message });
+
+  res.status(200).json(message);
+};
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
   remove,
+  search,
 };

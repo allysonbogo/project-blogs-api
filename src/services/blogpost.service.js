@@ -56,6 +56,7 @@ const findById = async (id) => {
       as: 'categories',
       through: { attributes: [] } }],
   });
+
   if (!post) {
     return { type: 404, message: 'Post does not exist' };
   }
@@ -63,8 +64,26 @@ const findById = async (id) => {
   return { type: null, message: post };
 };
 
+const update = async (data, id, token) => {
+  const { id: userId } = decodeToken(token);
+  const post = await BlogPost.findByPk(id);
+
+  if (!post) {
+    return { type: 404, message: 'Post does not exist' };
+  }
+
+  if (post.userId !== userId) {
+    return { type: 401, message: 'Unauthorized user' };
+  }
+
+  await BlogPost.update(data, { where: { id } });
+
+  return { type: null, message: (await findById(id)).message };
+};
+
 module.exports = {
   create,
   findAll,
   findById,
+  update,
 };

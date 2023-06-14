@@ -35,9 +35,20 @@ const update = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { authorization: token } = req.headers;
+  const { type, message } = await blogPostService.remove(id, token);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(204).end();
+};
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
+  remove,
 };

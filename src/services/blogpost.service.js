@@ -81,9 +81,27 @@ const update = async (data, id, token) => {
   return { type: null, message: (await findById(id)).message };
 };
 
+const remove = async (id, token) => {
+  const { id: userId } = decodeToken(token);
+  const post = await BlogPost.findByPk(id);
+
+  if (!post) {
+    return { type: 404, message: 'Post does not exist' };
+  }
+
+  if (post.userId !== userId) {
+    return { type: 401, message: 'Unauthorized user' };
+  }
+
+  await BlogPost.destroy({ where: { id } });
+
+  return { type: null };
+};
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
+  remove,
 };

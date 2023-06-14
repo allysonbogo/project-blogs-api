@@ -14,4 +14,6 @@ router.get('/:id', validateJWT, blogPostController.findById);
 
 router.put('/:id', validateJWT, validateBlogPostUpdate, blogPostController.update);
 
+router.delete('/:id', validateJWT, blogPostController.remove);
+
 module.exports = router;

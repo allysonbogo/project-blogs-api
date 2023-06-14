@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const schema = require('./validations');
-const { createToken } = require('../utils/JWT');
+const { createToken, decodeToken } = require('../utils/JWT');
 
 const create = async ({ displayName, email, password, image }) => {
   const error = schema.validateUser({ displayName, email, password });
@@ -39,8 +39,15 @@ const findById = async (id) => {
   return { type: null, message: filteredUser };
 };
 
+const remove = async (token) => {
+  const { id } = decodeToken(token);
+
+  await User.destroy({ where: { id } });
+};
+
 module.exports = {
   create,
   findAll,
   findById,
+  remove,
 };

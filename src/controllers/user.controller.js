@@ -25,8 +25,17 @@ const findById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const remove = async (req, res) => {
+  const { authorization: token } = req.headers;
+  
+  await userService.remove(token);
+
+  return res.status(204).end();
+};
+
 module.exports = {
   create,
   findAll,
   findById,
+  remove,
 };

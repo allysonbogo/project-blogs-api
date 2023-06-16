@@ -110,7 +110,7 @@ npm run dev
   <summary> Autenticação </summary>
   <br>
 
-> :warning: &nbsp; _Após o login de uma pessoa usuária cadastrada, é gerado um <code>token</code> válido por 15 minutos, o qual será autenticado em todas as rotas a seguir_
+> :warning: &nbsp; _Após o login de uma pessoa usuária cadastrada, é gerado um <code>token</code> válido por 15 minutos, o qual será autenticado em todas as rotas a seguir, exceto na rota de cadastro de uma pessoa usuária_
 
 <details>
   <summary> As requisições irão falhar nos seguintes casos: </summary>

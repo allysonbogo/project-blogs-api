@@ -198,7 +198,7 @@ npm run dev
     "displayName": "Lewis Hamilton",
     "email": "lewishamilton@gmail.com",
     "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
-  },
+  }
 ```
 </details>
 
@@ -210,7 +210,7 @@ npm run dev
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `DELETE` | Deleta uma pessoa usuária | `http://localhost:3001/user/me`
+| `DELETE` | Deleta uma pessoa usuária a partir do token de autenticação | `http://localhost:3001/user/me`
 
 * A resposta da requisição é <code>204</code> e sem body em caso de sucesso
 
@@ -412,7 +412,7 @@ npm run dev
   <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
   
 ```
-{{
+{
   "id": 3,
   "title": "Latest updates, August 1st",
   "content": "The whole text for the blog post goes here in this key",
@@ -441,7 +441,7 @@ npm run dev
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - A rota retorna um erro <code>401</code> <code>{ "message": "Unauthorized user" }</code>, caso o post editado não tenho sido criado pela pessoa usuária autenticada; <br>
+  - A rota retorna um erro <code>401</code> <code>{ "message": "Unauthorized user" }</code>, caso o post editado não tenha sido criado pela pessoa usuária autenticada; <br>
   - A rota retorna um erro <code>400</code> <code>{ "message": "Some required fields are missing" }</code>, caso todos os campos não estejam devidamente preenchidos; <br>
   - A rota retorna um erro <code>404</code> <code>{ message: "Post does not exist" }</code>, caso o post não esteja cadastrado no banco de dados; <br>
 </details>
@@ -455,7 +455,7 @@ npm run dev
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-    - A rota retorna um erro <code>401</code> <code>{ "message": "Unauthorized user" }</code>, caso o post deletado não tenho sido criado pela pessoa usuária autenticada; <br>
+    - A rota retorna um erro <code>401</code> <code>{ "message": "Unauthorized user" }</code>, caso o post deletado não tenha sido criado pela pessoa usuária autenticada; <br>
   - É disparado o erro <code>404</code> <code>{ "message": "Post does not exist" }</code>, caso o post não esteja cadastrado no banco de dados; <br>
 </details>
 <br>

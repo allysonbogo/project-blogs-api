@@ -65,7 +65,6 @@ npm run dev
 
 ## 📚 Documentação (endpoints)
 
-
 ### :bust_in_silhouette: Login
 <details>
   <summary> Rotas </summary>
@@ -102,6 +101,23 @@ npm run dev
   - A rota retorna um erro <code>400</code> <code>{ "message": "Some required fields are missing" }</code>, caso a requisição não tenha todos os campos devidamente preenchidos; <br>
   - A rota retorna um erro <code>400</code> <code>{ "message": "Invalid fields" }</code>, caso a requisição receba um par de <code>email</code> e <code>password</code> errados ou inexistentes; <br>
 </details>
+
+</details>
+
+
+### :coin: Token
+<details>
+  <summary> Autenticação </summary>
+  <br>
+
+> :warning: &nbsp; _Após o login de uma pessoa usuária cadastrada, é gerado um <code>token</code> válido por 15 minutos, o qual será autenticado em todas as rotas a seguir_
+
+<details>
+  <summary> As requisições irão falhar nos seguintes casos: </summary>
+  - É disparado o erro <code>401</code> <code>{ "message": "Token not found" }</code>, ao fazer uma operação sem um token; <br>
+  - É disparado o erro <code>401</code> <code>{ "message": "Expired or invalid token" }</code>, ao fazer uma operação com um token expirado ou inválido; <br>
+</details>
+
 </details>
 
 
@@ -130,7 +146,7 @@ npm run dev
 
 <details>
   <summary> A resposta da requisição é a seguinte com <code>status 201</code>: </summary>
-  
+
 ```
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
@@ -146,49 +162,11 @@ npm run dev
   - A rota retorna um erro <code>400</code> <code>{ "message": "\"password\" length must be at least 6 characters long" }</code>, caso a requisição não receba o campo <code>password</code> devidamente preenchido com pelo menos 6 caracteres; <br>
   - A rota retorna um erro <code>409</code> <code>{ "message": "User already registered" }</code>, caso o campo <code>email</code> já esteja cadastrado no banco de dados; <br>
 </details>
-
-
-| Método | Funcionalidade | URL |
-|---|---|---|
-| `GET` | Retorna uma lista de pessoas usuárias cadastradas | `http://localhost:3001/user`
-
-<details>
-  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
-  
-```
-[
-  {
-      "id": 1,
-      "displayName": "Lewis Hamilton",
-      "email": "lewishamilton@gmail.com",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
-  },
-  ...
-]
-```
-</details>
-
-<details>
-  <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"displayName\" length must be at least 8 characters long" }</code>, caso a requisição não receba o campo <code>displayName</code> devidamente preenchido com pelo menos 8 caracteres; <br>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"email\" must be a valid email" }</code>, caso a requisição não receba o campo <code>email</code> com formato válido; <br>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"password\" length must be at least 6 characters long" }</code>, caso a requisição não receba o campo <code>password</code> devidamente preenchido com pelo menos 6 caracteres; <br>
-  - A rota retorna um erro <code>409</code> <code>{ "message": "User already registered" }</code>, caso o campo <code>email</code> já esteja cadastrado no banco de dados; <br>
-</details>
-
-</details>
-
-
-### :bookmark: Categories
-
-### :newspaper: Post
-<details>
-  <summary> Rotas </summary>
-  <br>
+<br>
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `GET` | Retorna uma lista de produtos cadastrados | `http://localhost:3001/products`
+| `GET` | Retorna uma lista de pessoas usuárias | `http://localhost:3001/user`
 
 <details>
   <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
@@ -197,7 +175,9 @@ npm run dev
 [
   {
     "id": 1,
-    "name": "Martelo de Thor"
+    "displayName": "Lewis Hamilton",
+    "email": "lewishamilton@gmail.com",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
   },
   ...
 ]
@@ -207,173 +187,115 @@ npm run dev
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `GET` | Retorna um produto a partir do id | `http://localhost:3001/products/:id`
+| `GET` | Retorna uma pessoa usuária a partir do id | `http://localhost:3001/user/:id`
 
 <details>
   <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
   
 ```
-{
-  "id": 1,
-  "name": "Martelo de Thor"
-}
+  {
+    "id": 1,
+    "displayName": "Lewis Hamilton",
+    "email": "lewishamilton@gmail.com",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+  },
 ```
 </details>
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - É disparado o erro <code>404</code> <code>{ message: "Product not found" }</code>, caso o produto não esteja cadastrado no banco de dados; <br>
+  - É disparado o erro <code>404</code> <code>{ message: "User does not exist" }</code>, caso a pessoa usuária não esteja cadastrada no banco de dados; <br>
 </details>
 <br>
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `POST` | Realiza o cadastro de um produto | `http://localhost:3001/products`
-
-<details>
-  <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
-
-```
-{
-  "name": "Elemento X"
-}
-```
-</details>
-
-<details>
-  <summary> A resposta da requisição é a seguinte com <code>status 201</code>: </summary>
-  
-```
-{
-  "id": 24,
-  "name": "Elemento X"
-}
-```
-</details>
-
-<details>
-  <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"name\" is required" }</code> ao tentar cadastrar um produto sem o campo nome; <br>
-  - A rota retorna um erro <code>422</code> <code>{ "message": "\"name\" length must be at least 5 characters long" }</code> ao tentar cadastrar um produto com o campo nome com quantidade de caracteres inferior a 5; <br>
-  - A rota retorna um erro <code>422</code> <code>{ "message": "\"name\" must be a string" }</code> ao tentar cadastrar um produto com o campo nome não sendo uma string; <br>
-</details>
-<br>
-
-| Método | Funcionalidade | URL |
-|---|---|---|
-| `PUT` | Atualiza um produto a partir do id | `http://localhost:3001/products/:id`
-
-<details>
-  <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
-
-```
-{
-  "name": "Novo nome"
-}
-```
-</details>
-
-<details>
-  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
-  
-```
-{
-  "id": 1,
-  "name": "Novo nome"
-}
-```
-</details>
-
-<details></code>
-  <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - A rota retorna um erro <code>404</code> <code>{ "message": Product not found" }</code> ao tentar atualizar um produto não cadastrado no banco de dados; <br>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"name\" is required" }</code> ao tentar atualizar um produto sem o campo nome; <br>
-  - A rota retorna um erro <code>422</code> <code>{ "message": "\"name\" length must be at least 5 characters long" }</code> ao tentar atualizar um produto com o campo nome com quantidade de caracteres inferior a 5; <br>
-  - A rota retorna um erro <code>422</code> <code>{ "message": "\"name\" must be a string" }</code> ao tentar atualizar um produto com o campo nome não sendo uma string; <br>
-</details>
-<br>
-
-| Método | Funcionalidade | URL |
-|---|---|---|
-| `DELETE` | Deleta um produto a partir do id | `http://localhost:3001/products/:id`
+| `DELETE` | Deleta uma pessoa usuária | `http://localhost:3001/user/me`
 
 * A resposta da requisição é <code>204</code> e sem body em caso de sucesso
 
-<details>
-  <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - É disparado o erro <code>404</code> <code>{ "message": "Product not found" }</code>, caso o produto não esteja cadastrado no banco de dados; <br>
-</details>
 </details>
 
 
-### :moneybag: Sales
-
+### :bookmark: Categories
 <details>
   <summary> Rotas </summary>
   <br>
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `GET` | Retorna uma lista de vendas cadastradas | `http://localhost:3001/sales`
+| `POST` | Realiza o cadastro de uma categoria | `http://localhost:3001/categories`
 
 <details>
-  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
-  
-```
-[
-  {
-    "saleId": 1,
-    "date": "2023-05-30T21:21:46.000Z",
-    "productId": 1,
-    "quantity": 5
-  },
-  ...
-]
+  <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
 
+```
+{
+  "name": "Typescript"
+}
 ```
 </details>
-<br>
-
-| Método | Funcionalidade | URL |
-|---|---|---|
-| `GET` | Retorna uma venda a partir do id | `http://localhost:3001/sales/:id`
 
 <details>
-  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
-  
+  <summary> A resposta da requisição é a seguinte com <code>status 201</code>: </summary>
+
 ```
-[
-  {
-    "date": "2023-05-30T21:21:46.000Z",
-    "productId": 1,
-    "quantity": 5
-  },
-  ...
-]
+{
+  "id": 3,
+  "name": "Typescript"
+}
 ```
 </details>
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - É disparado o erro <code>404</code> <code>{ "message": "Sale not found" }</code>, caso a venda não esteja cadastrada no banco de dados; <br>
+  - A rota retorna um erro <code>400</code> <code>{ "message": "\"name\" is required" }</code>, caso a requisição não receba o campo <code>name</code> devidamente preenchido; <br>
 </details>
 <br>
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `POST` | Realiza o cadastro de uma venda | `http://localhost:3001/sales`
+| `GET` | Retorna uma lista de categorias | `http://localhost:3001/categories`
 
 <details>
-  <summary> A estrutura do body da requisição deverá seguir o padrão abaixo:  </summary>
+  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
   
 ```
 [
   {
-    "productId": 1,
-    "quantity": 5
+      "id": 1,
+      "name": "Inovação"
+  },
+  {
+      "id": 2,
+      "name": "Escola"
   },
   ...
 ]
+```
+</details>
+
+</details>
+
+
+### :newspaper: Post
+<details>
+  <summary> Rotas </summary>
+  <br>
+
+| Método | Funcionalidade | URL |
+|---|---|---|
+| `POST` | Realiza o cadastro de um post | `http://localhost:3001/post`
+
+<details>
+  <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
+
+```
+{
+  "title": "Latest updates, August 1st",
+  "content": "The whole text for the blog post goes here in this key",
+  "categoryIds": [1, 2]
+}
 ```
 </details>
 
@@ -383,12 +305,83 @@ npm run dev
 ```
 {
   "id": 3,
-  "itemsSold": [
-    {
-      "productId": 1,
-      "quantity": 5
+  "title": "Latest updates, August 1st",
+  "content": "The whole text for the blog post goes here in this key",
+  "userId": 1,
+  "updated": "2023-06-16T10:00:01.196Z",
+  "published": "2023-06-16T10:00:01.196Z"
+}
+```
+</details>
+
+<details>
+  <summary> A requisição irá falhar nos seguintes casos: </summary>
+  - A rota retorna um erro <code>400</code> <code>{ "message": "Some required fields are missing" }</code>, caso todos os campos não estejam devidamente preenchidos; <br>
+  - A rota retorna um erro <code>400</code> <code>{ "message": "one or more \"categoryIds\" not found" }</code>, caso o campo <code>categoryIds</code> não esteja devidamente preenchido com um array contendo apenas categorias existentes no banco de dados; <br>
+</details>
+<br>
+
+| Método | Funcionalidade | URL |
+|---|---|---|
+| `GET` | Retorna uma lista de posts | `http://localhost:3001/post`
+
+<details>
+  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
+  
+```
+[
+  {
+    "id": 1,
+    "title": "Post do Ano",
+    "content": "Melhor post do ano",
+    "userId": 1,
+    "published": "2011-08-01T19:58:00.000Z",
+    "updated": "2011-08-01T19:58:51.000Z",
+    "user": {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
     },
-    ...
+    "categories": [
+      {
+        "id": 1,
+        "name": "Inovação"
+      }
+    ]
+  },
+  ...
+]
+```
+</details>
+<br>
+
+| Método | Funcionalidade | URL |
+|---|---|---|
+| `GET` | Retorna um post a partir do id | `http://localhost:3001/post/:id`
+
+<details>
+  <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
+  
+```
+{
+  "id": 1,
+  "title": "Post do Ano",
+  "content": "Melhor post do ano",
+  "userId": 1,
+  "published": "2011-08-01T19:58:00.000Z",
+  "updated": "2011-08-01T19:58:51.000Z",
+  "user": {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+  },
+  "categories": [
+      {
+          "id": 1,
+          "name": "Inovação"
+      }
   ]
 }
 ```
@@ -396,24 +389,21 @@ npm run dev
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - A rota retorna um erro <code>404</code> <code>{ "message": Product not found" }</code> ao tentar cadastrar uma venda com um produto não cadastrado no banco de dados; <br>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"productId\" is required" }</code> ao tentar cadastrar uma venda sem o campo productId; <br>
-  - A rota retorna um erro <code>422</code> <code>{ "message": "\"productId\" must be greater than or equal to 1" }</code> ao tentar cadastrar uma venda com o campo productId inferior a 1; <br>
-  - A rota retorna um erro <code>400</code> <code>{ "message": "\"quantity\" is required" }</code> ao tentar cadastrar uma venda sem o campo quantity; <br>
-  - A rota retorna um erro <code>422</code> <code>{ "message": "\"quantity\" must be greater than or equal to 1" }</code> ao tentar cadastrar uma venda com o campo quantity inferior a 1; <br>
+  - É disparado o erro <code>404</code> <code>{ message: "Post does not exist" }</code>, caso o post não esteja cadastrado no banco de dados; <br>
 </details>
 <br>
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `PUT` | Atualiza a quantidade de um produto de uma venda | `http://localhost:3001/sales/:saleId/  products/:productId/quantity`
+| `PUT` | Atualiza um post a partir do id | `http://localhost:3001/post/:id`
 
 <details>
   <summary> A estrutura do body da requisição deverá seguir o padrão abaixo: </summary>
-  
+
 ```
 {
-  "quantity": 5
+  "title": "Latest updates, August 1st",
+  "content": "The whole text for the blog post goes here in this key"
 }
 ```
 </details>
@@ -422,34 +412,130 @@ npm run dev
   <summary> A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
   
 ```
-{
-  "date": "2023-05-31T00:21:46.000Z",
-  "productId": 1,
-  "quantity": 1,
-  "saleId": 1
+{{
+  "id": 3,
+  "title": "Latest updates, August 1st",
+  "content": "The whole text for the blog post goes here in this key",
+  "userId": 1,
+  "published": "2022-05-18T18:00:01.000Z",
+  "updated": "2022-05-18T18:07:32.000Z",
+  "user": {
+    "id": 1,
+    "displayName": "Lewis Hamilton",
+    "email": "lewishamilton@gmail.com",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+  },
+  "categories": [
+    {
+      "id": 1,
+      "name": "Inovação"
+    },
+    {
+      "id": 2,
+      "name": "Escola"
+    }
+  ]
 }
 ```
 </details>
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - É disparado o erro <code>404</code> <code>{ "message": Sale not found" }</code> ao tentar atualizar uma venda não cadastrada no banco de dados; <br>
-  - É disparado o erro <code>404</code> <code>{ "message": Product not found in sale" }</code> ao tentar atualizar um produto não cadastrado na venda; <br>
-  - É disparado o erro <code>400</code> <code>{ "message": "\"quantity\" is required" }</code> ao tentar atualizar uma venda sem o campo quantity; <br>
-  - É disparado o erro <code>422</code> <code>{ "message": "\"quantity\" must be greater than or equal to 1" }</code> ao tentar atualizar uma venda com o campo quantity inferior a 1; <br>
+  - A rota retorna um erro <code>401</code> <code>{ "message": "Unauthorized user" }</code>, caso o post editado não tenho sido criado pela pessoa usuária autenticada; <br>
+  - A rota retorna um erro <code>400</code> <code>{ "message": "Some required fields are missing" }</code>, caso todos os campos não estejam devidamente preenchidos; <br>
+  - A rota retorna um erro <code>404</code> <code>{ message: "Post does not exist" }</code>, caso o post não esteja cadastrado no banco de dados; <br>
 </details>
 <br>
 
 | Método | Funcionalidade | URL |
 |---|---|---|
-| `DELETE` | Deleta uma venda a partir do id | `http://localhost:3001/sales/:id`
+| `DELETE` | Deleta um post a partir do id | `http://localhost:3001/post/:id`
 
 * A resposta da requisição é <code>204</code> e sem body em caso de sucesso
 
 <details>
   <summary> A requisição irá falhar nos seguintes casos: </summary>
-  - A rota retorna um erro <code>404</code> <code>{ "message": "Sale not found" }</code>, caso a venda não esteja cadastrada no banco de dados; <br>
+    - A rota retorna um erro <code>401</code> <code>{ "message": "Unauthorized user" }</code>, caso o post deletado não tenho sido criado pela pessoa usuária autenticada; <br>
+  - É disparado o erro <code>404</code> <code>{ "message": "Post does not exist" }</code>, caso o post não esteja cadastrado no banco de dados; <br>
 </details>
+<br>
+
+| Método | Funcionalidade | URL |
+|---|---|---|
+| `GET` | Retorna uma lista de posts de acordo com o termo de pesquisa | `http://localhost:3001/post/search?q=searchTerm`
+
+<details>
+  <summary> A estrutura da URL deverá seguir o padrão abaixo: </summary>
+
+```
+/talker/search?q=vamos
+```
+</details>
+
+<details>
+  <summary> O termo de pesquisa pode ser referente ao <code>title</code> ou <code>content</code> do post. A resposta da requisição é a seguinte com <code>status 200</code>: </summary>
+  
+```
+[
+  {
+    "id": 2,
+    "title": "Vamos que vamos",
+    "content": "Foguete não tem ré",
+    "userId": 1,
+    "published": "2011-08-01T19:58:00.000Z",
+    "updated": "2011-08-01T19:58:51.000Z",
+    "user": {
+      "id": 1,
+      "displayName": "Lewis Hamilton",
+      "email": "lewishamilton@gmail.com",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+    },
+    "categories": [
+      {
+        "id": 2,
+        "name": "Escola"
+      }
+    ]
+  }
+]
+```
+</details>
+
+<details>
+  <summary> Caso o termo de pesquisa não seja informado ou esteja vazio, o endpoint deverá retornar o <code>status 200</code> e um array com todos os posts cadastrados: </summary>
+
+  ```
+  [
+    {
+      "id": 1,
+      "title": "Post do Ano",
+      "content": "Melhor post do ano",
+      "userId": 1,
+      "published": "2011-08-01T19:58:00.000Z",
+      "updated": "2011-08-01T19:58:51.000Z",
+      "user": {
+        "id": 1,
+        "displayName": "Lewis Hamilton",
+        "email": "lewishamilton@gmail.com",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg"
+      },
+      "categories": [
+        {
+          "id": 1,
+          "name": "Inovação"
+        }
+      ]
+    },
+    ...
+  ]
+```
+</details>
+
+<details>
+<summary> Caso nenhum post satisfaça a busca, o endpoint deve retornar o <code>status 200</code> e um array vazio. Exemplo: </summary>
+<code>[]</code>
+</details>
+
 </details>
 <br>
 

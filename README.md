@@ -43,7 +43,7 @@ git clone git@github.com:allysonbogo/project-blogs-api.git
 npm install
 ```
 
-3. Para rodar o projeto é necessario executar o comando abaixo no diretório raiz do projeto. Isso fará com que os containers docker sejam orquestrados e a aplicação esteja disponível
+3. Para rodar o projeto é necessário executar o comando abaixo no diretório raiz do projeto. Isso fará com que os containers docker sejam orquestrados e a aplicação esteja disponível
 
 ```
 docker-compose up -d
@@ -145,7 +145,7 @@ npm run dev
 </details>
 
 <details>
-  <summary> A resposta da requisição é a seguinte com <code>status 201</code>: </summary>
+  <summary> Para o cadastro de uma pessoa usuária não é necessário estar autenticado no sistema. Após o cadastro, todas as outras requisições exigem um token de autenticação. A resposta da requisição é a seguinte com <code>status 201</code>: </summary>
 
 ```
 {
